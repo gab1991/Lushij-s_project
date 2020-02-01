@@ -5,12 +5,48 @@
 }
 
 body {
-  font-family: sans-serif;
-  background: url('./background.jpg');
-}
-
-.wrapper {
+  font-family: 'Raleway', sans-serif;
+  /* background: url('./background.jpg'); */
+  background: linear-gradient(lightgrey, lightblue);
   width: 100%;
   height: 100vh;
-  
+  text-align: center;
 }
+
+header {
+  height: 10vh;
+}
+
+h1 {
+  padding: 10px;
+}
+
+table, td, th{
+  border: 1px solid black;
+  padding: 10px;
+}
+
+
+.content-table{
+  width:90%;
+  margin-top: 2%;
+  margin-left: 5%; 
+  margin-right: 5%;
+  border-collapse: collapse;
+}
+
+.content-table thead tr{
+
+  background-color: rgba(16, 49, 16, 0.63);
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.content-table tbody tr{
+  font-size: 0.9em;
+}
+
+.content-table tbody tr:nth-of-type(even){
+  background-color: rgba(85, 131, 84, 0.2);
+}
+

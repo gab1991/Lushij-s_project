@@ -1,5 +1,4 @@
-export const data = [
-  {
+export const data = [{
     id: 1,
     user_id: 2,
     chat_id: 313659044,
@@ -29,8 +28,7 @@ export const data = [
     id: 3,
     user_id: 2,
     chat_id: 313659044,
-    text:
-      "ytyutdyxfnxftntxtjxkklbjkovuobipbivhm fhxthxthxfthxthr zrgzdhxftjxtjxtxfxdfrgzdrgzdr zdfhxjtx", // editable
+    text: "ytyutdyxfnxftntxtjxkklbjkovuobipbivhm fhxthxthxfthxthr zrgzdhxftjxtjxtxfxdfrgzdrgzdr zdfhxjtx", // editable
     type: "vacancy", // editable
     publish_date: "2020-01-23", // editable
     publish_hour: 17, // editable
@@ -43,8 +41,7 @@ export const data = [
     id: 4,
     user_id: 2,
     chat_id: 313659044,
-    text:
-      "dtjxyjrdhzrj xtjcyjcukukcyjxfthx xukvhukctjxrxfhgf xftjcgukjkcghxdrhdr xdhftjcyjxfgnxfg rxhdhxd", // editable
+    text: "dtjxyjrdhzrj xtjcyjcukukcyjxfthx xukvhukctjxrxfhgf xftjcgukjkcghxdrhdr xdhftjcyjxfgnxfg rxhdhxd", // editable
     type: "vacancy", // editable
     publish_date: "2020-01-23", // editable
     publish_hour: 17, // editable
