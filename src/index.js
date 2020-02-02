@@ -2,8 +2,7 @@ import { data } from "/src/data.js";
 
 const table = document.querySelector('.content-table');
 const tbody = table.querySelector('tbody');
-
-// console.log(tds);
+const thead = table.querySelector('thead');
 
 function addRow() {
     data.forEach(row => {
@@ -35,13 +34,22 @@ function loadTable() {
     });
 }
 
-loadTable().then(function() {
-    const tds = document.querySelectorAll('td');
-    tds.forEach(td => {
-        td.setAttribute('contenteditable', true);
+function getListOfHeadings(thead){
+    const headers = thead.querySelectorAll('th');
+    const list = [];
+    headers.forEach(header => {
+        list.push(header.textContent);
     });
-});
+    return list
+}
 
+loadTable()
+    .then(function () {
+        const tds = document.querySelectorAll('td');
+        tds.forEach(td => {
+            td.setAttribute('contenteditable', true);
+        });
+    });
 
 
 // document.addEventListener('DOMContentLoaded', addRow);
