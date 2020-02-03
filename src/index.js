@@ -51,6 +51,8 @@ loadTable()
         });
     });
 
+// trying different features
+
 
 // document.addEventListener('DOMContentLoaded', addRow);
 // tds.forEach(td => td.isContentEditable = true);
