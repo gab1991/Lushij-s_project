@@ -1,8 +1,23 @@
 import {data} from "/src/data.js";
 
-const table = document.querySelector('.content-table');
-const tbody = table.querySelector('tbody');
-const thead = table.querySelector('thead');
+function drawTable(headers, parentEl , afterEl) {
+    const table = document.createElement('table');
+    const thead = document.createElement('thead');
+    const tbody = document.createElement('tbody');
+    const tr = document.createElement('tr');
+
+    headers.forEach( header => {
+        const th = document.createElement('th');
+        th.textContent = header;
+        tr.appendChild(th);        
+    });
+    
+    thead.appendChild(tr);
+    table.appendChild(thead);
+    table.appendChild(tbody);
+    if (parentEl) parentEl.appendChild(table);
+    if (afterEl) afterEl.after(table);
+}
 
 function addRows() {
     data.forEach(row => {
@@ -28,13 +43,6 @@ function clearRows() {
     }
 }
 
-function loadTable() {
-    return new Promise(function (resolve, reject) {
-        addRow();
-        resolve()
-    });
-}
-
 function getListOfHeadings(thead) {
     const headers = thead.querySelectorAll('th');
     const list = [];
@@ -55,6 +63,29 @@ function multipleSelector(arrOfClasses) {
     return document.querySelectorAll(joinedElms);
 }
 
+////////////////////////       Executable Part
+
+//Get the headings from the data file
+const headers = Object.keys(data[0]);
+
+// Making the first letter capital
+const headersUpper = [];
+headers.forEach(header => {
+    const headerUpper = header[0].toUpperCase() + header.slice(1);
+    headersUpper.push(headerUpper);
+});
+
+// Draw the table
+const body = document.querySelector('body');
+const header = document.querySelector('header');
+
+drawTable(headersUpper, body, header);
+
+const table = document.querySelector('table');
+const tbody = table.querySelector('tbody');
+
+table.classList.add('content-table');
+
 let loadTables = new Promise(function (resolve, reject) {
         addRows();
         //checking if each row has been uploaded
@@ -69,5 +100,3 @@ let loadTables = new Promise(function (resolve, reject) {
         addAtribute(selectedElms, 'contenteditable');
     });
 
-// 1. Почему я не могу изменить данное свойство у ряда? Пришлось вместо этого пользоваться атрибутом contenteditable
-// tds.forEach(td => td.isContentEditable = true);
