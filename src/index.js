@@ -4,7 +4,7 @@ const table = document.querySelector('.content-table');
 const tbody = table.querySelector('tbody');
 const thead = table.querySelector('thead');
 
-function addRow() {
+function addRows() {
     data.forEach(row => {
         const tr = document.createElement('tr');
         // Making an array from given object
@@ -51,14 +51,24 @@ function addAtribute(list, attribute) {
 }
 
 function multipleSelector(arrOfClasses) {
-    let joinedElms = arrOfClasses.join(' ');
+    let joinedElms = arrOfClasses.join(' ,');
     return document.querySelectorAll(joinedElms);
 }
 
-loadTable();
-const selectedElms = multipleSelector(['.text' , '.type', '.publish_date', '.publish_hour', '.is_paid', '.is_deleted']);
-console.log(selectedElms);
+let loadTables = new Promise(function (resolve, reject) {
+        addRows();
+        //checking if each row has been uploaded
+        if (tbody.children.length === data.length) {
+            resolve()
+        } else {
+            reject('Rows have not been downloaded')
+        };
+    }).catch(err => alert(err))
+    .then(() => {
+        const selectedElms = multipleSelector(['.text', '.type', '.publish_date', '.publish_hour', '.is_paid', '.is_deleted']);
+        addAtribute(selectedElms, 'contenteditable');
+    });
 
-// document.addEventListener('DOMContentLoaded', addRow);
+// 1. Почему я не могу изменить данное свойство у ряда? Пришлось вместо этого пользоваться атрибутом contenteditable
 // tds.forEach(td => td.isContentEditable = true);
 
