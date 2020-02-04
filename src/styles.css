@@ -1,4 +1,4 @@
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -21,32 +21,63 @@ h1 {
   padding: 10px;
 }
 
-table, td, th{
+table,
+td,
+th {
   border: 1px solid black;
-  padding: 10px;
+  padding: 5px;
 }
 
+td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-.content-table{
-  width:90%;
+.content-table {
+  table-layout: fixed;
+  overflow: hidden;
+  width: 90%;
   margin-top: 2%;
-  margin-left: 5%; 
+  margin-left: 5%;
   margin-right: 5%;
   border-collapse: collapse;
 }
 
-.content-table thead tr{
-
+.content-table thead tr {
   background-color: rgba(16, 49, 16, 0.63);
-  font-size: 1.2em;
   font-weight: bold;
+  height: 40px;
 }
 
-.content-table tbody tr{
+.content-table tbody tr {
   font-size: 0.9em;
 }
 
-.content-table tbody tr:nth-of-type(even){
+.content-table tbody tr:nth-of-type(even) {
   background-color: rgba(85, 131, 84, 0.2);
 }
 
+table>thead>tr>th:nth-child(1) {
+  width: 30px;
+}
+
+table>thead>tr>th:nth-child(2),
+table>thead>tr>th:nth-child(8) {
+  width: 70px;
+}
+
+table>thead>tr>th:nth-child(3),
+table>thead>tr>th:nth-child(5),
+table>thead>tr>th:nth-child(10) {
+  width: 100px;
+}
+
+table>thead>tr>th:nth-child(4) {
+  width: 200px;
+}
+
+td:focus {
+  white-space: normal;
+  border: 3px solid rgb(76, 143, 165);
+}

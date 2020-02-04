@@ -1,4 +1,4 @@
-import { data } from "/src/data.js";
+import {data} from "/src/data.js";
 
 const table = document.querySelector('.content-table');
 const tbody = table.querySelector('tbody');
@@ -9,7 +9,7 @@ function addRows() {
         const tr = document.createElement('tr');
         // Making an array from given object
         const entries = Object.entries(row);
-    
+
         //Getting each individual cell
         entries.forEach(cell => {
             const td = document.createElement('td');
@@ -23,7 +23,7 @@ function addRows() {
 }
 
 function clearRows() {
-    while(tbody.firstChild) {
+    while (tbody.firstChild) {
         tbody.removeChild(tbody.firstChild);
     }
 }
@@ -35,7 +35,7 @@ function loadTable() {
     });
 }
 
-function getListOfHeadings(thead){
+function getListOfHeadings(thead) {
     const headers = thead.querySelectorAll('th');
     const list = [];
     headers.forEach(header => {
@@ -71,4 +71,3 @@ let loadTables = new Promise(function (resolve, reject) {
 
 // 1. Почему я не могу изменить данное свойство у ряда? Пришлось вместо этого пользоваться атрибутом contenteditable
 // tds.forEach(td => td.isContentEditable = true);
-
