@@ -13,7 +13,8 @@ function addRow() {
         //Getting each individual cell
         entries.forEach(cell => {
             const td = document.createElement('td');
-            // Need to create some sort of check here to place the value on the corresponding cell based on the heading of the row
+            // Adding class names based on the rows names for further manipulations
+            td.classList.add(`${cell[0]}`);
             td.textContent = cell[1];
             tr.appendChild(td);
             tbody.appendChild(tr);
@@ -43,16 +44,20 @@ function getListOfHeadings(thead){
     return list
 }
 
-loadTable()
-    .then(function () {
-        const tds = document.querySelectorAll('td');
-        tds.forEach(td => {
-            td.setAttribute('contenteditable', true);
-        });
+function addAtribute(list, attribute) {
+    list.forEach(el => {
+        el.setAttribute(attribute, true);
     });
+}
 
-// trying different features
+function multipleSelector(arrOfClasses) {
+    let joinedElms = arrOfClasses.join(' ');
+    return document.querySelectorAll(joinedElms);
+}
 
+loadTable();
+const selectedElms = multipleSelector(['.text' , '.type', '.publish_date', '.publish_hour', '.is_paid', '.is_deleted']);
+console.log(selectedElms);
 
 // document.addEventListener('DOMContentLoaded', addRow);
 // tds.forEach(td => td.isContentEditable = true);
