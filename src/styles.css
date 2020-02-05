@@ -77,3 +77,37 @@ td:focus {
   white-space: normal;
   border: 3px solid rgb(76, 143, 165);
 }
+
+.pagination {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination button {
+  padding: 5px;
+  border: 2px solid  rgba(16, 49, 16, 0.63);
+  border-radius: 3px;
+  font-family: inherit;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+  background-color: rgb(186, 226, 186);
+  cursor: pointer;
+  transition: all ease-in 0.25s;
+}
+
+button.active{
+  transform: scale(1.1);
+  background-color: rgb(155, 201, 155);
+}
+
+button:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+button:focus {
+  outline: none;
+}

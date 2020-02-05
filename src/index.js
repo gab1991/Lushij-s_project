@@ -94,6 +94,34 @@ function multipleSelector(arrOfClasses) {
     return document.querySelectorAll(joinedElms);
 }
 
+//Pagination
+function setUpPagination(data, rowsPerPage) {
+    const wrapper = document.querySelector('.pagination')
+    let pageCount = Math.ceil(data.length / rowsPerPage);
+    
+    for (let i = 1; i <= pageCount; i++) {
+        const button = createPaginationButton(i);
+        wrapper.appendChild(button);
+    }
+}
+
+function createPaginationButton(page) {
+    const button = document.createElement('button');
+    button.textContent = page;
+    if(currentPage === page) button.classList.add('active');
+    return button;
+}
+
+function makeActive() {
+    btns.forEach( btn => btn.classList.remove('active'));
+    this.classList.add('active');
+    //fetch data that corresponds with the clicked number
+    let pageNumber = this.textContent;
+    
+    let currentData = getData(pageNumber, pageSize);
+    loadTables();
+   
+}
 ////////////////////////       Executable Part
 
 //Get the headings from the currentData file
@@ -119,14 +147,16 @@ table.classList.add('content-table');
 
 let pageSize = countRowsToFetch();
 console.log(pageSize);
+
 // Fetch the data from data module
 let pageIndex = 0;
 let pageCash = [];
 let currentData = getData(1,pageSize);
 pageCashFiller(currentData);
-console.log(pageCash);
+// console.log(pageCash);
 
-let loadTables = new Promise(function (resolve, reject) {
+(function loadTable() {
+ let loadTables = new Promise(function (resolve, reject) {
         addRows();
         //checking if each row has been uploaded
         if (tbody.children.length === currentData.length) {
@@ -139,4 +169,11 @@ let loadTables = new Promise(function (resolve, reject) {
         const selectedElms = multipleSelector(['.text', '.type', '.publish_date', '.publish_hour', '.is_paid', '.is_deleted']);
         addAtribute(selectedElms, 'contenteditable');
     });
+})();
 
+    //pagintation
+    let currentPage = 1;
+    setUpPagination(data,pageSize);
+
+    const btns = document.querySelectorAll('.pagination button');
+    btns.forEach(btn => btn.addEventListener('click', makeActive));
