@@ -19,8 +19,39 @@ function drawTable(headers, parentEl , afterEl) {
     if (afterEl) afterEl.after(table);
 }
 
+function countRowsToFetch() {
+    // const thead = document.querySelector('th');
+    const theadHeight = 40
+    const rowHeight = 28; //setting default height of the row
+    const tableDimensions = table.getBoundingClientRect();   // Getting the size of the table 
+    const tOffsetAndHeight = tableDimensions.y;
+    const freeSpaceBottom = 2 * rowHeight;
+    const rowsToUpload = Math.floor(((window.innerHeight - (tOffsetAndHeight + theadHeight + freeSpaceBottom)) / rowHeight));
+    return rowsToUpload;    
+}
+
+function getData(pageNumber, pageSize) {
+    const pageData = [];
+    let startpoint = (pageNumber-1) * pageSize;
+    let endpoint = (startpoint + pageSize) - 1;
+    console.log(data.length)
+    for (let i = startpoint; endpoint >= i; i++) {
+        if(data[i]) {
+            pageData.push(data[i]);
+        } else {
+            console.error(`No data to fill the whole page`);
+        }
+        
+    }
+    return pageData;
+}
+
+function pageCashFiller(listRows) {
+    return pageCash.push([listRows]);
+}
+
 function addRows() {
-    data.forEach(row => {
+    currentData.forEach(row => {
         const tr = document.createElement('tr');
         // Making an array from given object
         const entries = Object.entries(row);
@@ -65,16 +96,14 @@ function multipleSelector(arrOfClasses) {
 
 ////////////////////////       Executable Part
 
-//Get the headings from the data file
+//Get the headings from the currentData file
 const headers = Object.keys(data[0]);
-
 // Making the first letter capital
 const headersUpper = [];
 headers.forEach(header => {
     const headerUpper = header[0].toUpperCase() + header.slice(1);
     headersUpper.push(headerUpper);
 });
-
 // Draw the table
 const body = document.querySelector('body');
 const header = document.querySelector('header');
@@ -86,15 +115,26 @@ const tbody = table.querySelector('tbody');
 
 table.classList.add('content-table');
 
+//Count how many rows might fit into the table
+
+let pageSize = countRowsToFetch();
+console.log(pageSize);
+// Fetch the data from data module
+let pageIndex = 0;
+let pageCash = [];
+let currentData = getData(1,pageSize);
+pageCashFiller(currentData);
+console.log(pageCash);
+
 let loadTables = new Promise(function (resolve, reject) {
         addRows();
         //checking if each row has been uploaded
-        if (tbody.children.length === data.length) {
+        if (tbody.children.length === currentData.length) {
             resolve()
         } else {
             reject('Rows have not been downloaded')
         };
-    }).catch(err => alert(err))
+    }).catch(err => console.error(err))
     .then(() => {
         const selectedElms = multipleSelector(['.text', '.type', '.publish_date', '.publish_hour', '.is_paid', '.is_deleted']);
         addAtribute(selectedElms, 'contenteditable');
