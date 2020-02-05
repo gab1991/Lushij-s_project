@@ -74,6 +74,23 @@ function clearRows() {
     }
 }
 
+
+function loadTable(currentData) {
+    let loadTables = new Promise(function (resolve, reject) {
+           addRows();
+           //checking if each row has been uploaded
+           if (tbody.children.length === currentData.length) {
+               resolve()
+           } else {
+               reject('Rows have not been downloaded')
+           };
+       }).catch(err => console.error(err))
+       .then(() => {
+           const selectedElms = multipleSelector(['.text', '.type', '.publish_date', '.publish_hour', '.is_paid', '.is_deleted']);
+           addAtribute(selectedElms, 'contenteditable');
+       });
+   };
+
 function getListOfHeadings(thead) {
     const headers = thead.querySelectorAll('th');
     const list = [];
@@ -119,7 +136,7 @@ function makeActive() {
     let pageNumber = this.textContent;
     
     let currentData = getData(pageNumber, pageSize);
-    loadTables();
+    loadTable(currentData);
    
 }
 ////////////////////////       Executable Part
@@ -155,21 +172,7 @@ let currentData = getData(1,pageSize);
 pageCashFiller(currentData);
 // console.log(pageCash);
 
-(function loadTable() {
- let loadTables = new Promise(function (resolve, reject) {
-        addRows();
-        //checking if each row has been uploaded
-        if (tbody.children.length === currentData.length) {
-            resolve()
-        } else {
-            reject('Rows have not been downloaded')
-        };
-    }).catch(err => console.error(err))
-    .then(() => {
-        const selectedElms = multipleSelector(['.text', '.type', '.publish_date', '.publish_hour', '.is_paid', '.is_deleted']);
-        addAtribute(selectedElms, 'contenteditable');
-    });
-})();
+loadTable();
 
     //pagintation
     let currentPage = 1;
