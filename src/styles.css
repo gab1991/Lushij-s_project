@@ -7,7 +7,8 @@
 body {
   font-family: 'Raleway', sans-serif;
   /* background: url('./background.jpg'); */
-  background: linear-gradient(lightgrey, lightblue);
+  background:  lightgrey ;
+  background-size: cover;
   width: 100%;
   height: 100vh;
   text-align: center;
@@ -96,7 +97,7 @@ td:focus {
   margin: 5px;
   background-color: rgb(186, 226, 186);
   cursor: pointer;
-  transition: all ease-in 0.25s;
+  transition: all ease-in 0.1s;
 }
 
 button.active{
