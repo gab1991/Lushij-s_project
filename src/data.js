@@ -1144,3 +1144,25 @@ export const data = [
     create_date: "2020-01-23 15:12:37"
   }
 ];
+
+
+function loadData(url) {
+  // Create XHR Object
+  // const xhr = new XMLHttpRequest();
+  // console.log(xhr);
+
+  // // Open 
+  // xhr.open('GET', url , true);
+  // xhr.send();
+  // xhr.onload = function() {
+  //     if(this.status === 200) {
+  //         console.log(this.responseText);
+  //     }
+  // }
+  fetch(url).then((res) => {
+  return res.json();
+})
+  
+}
+
+loadData('https://staffz.ru/api/announce-list?offset=0&limit=5');

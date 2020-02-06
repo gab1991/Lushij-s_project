@@ -125,9 +125,20 @@ function setUpPagination(data, rowsPerPage) {
             const button = createPaginationButton('<<');
             wrapper.appendChild(button);
         }
+        if(pageCount > 10 && i === 2) {
+            // Make the first 3dot button
+            const button = createPaginationButton('. . .');
+            wrapper.appendChild(button);
+        }
             // Make usual buttons
         const button = createPaginationButton(i);
         wrapper.appendChild(button);
+
+        if(pageCount > 10 && i === pageCount-1) {
+            // Make the las 3dot button
+            const button = createPaginationButton('. . .');
+            wrapper.appendChild(button);
+        }
 
         if(i === pageCount && pageCount > 1) {
             // Make the last arrow button
@@ -221,4 +232,4 @@ let currentPage = 1;
 setUpPagination(data, pageSize);
 
 const btns = document.querySelectorAll('.pagination button');
-btns.forEach(btn => btn.addEventListener('click', makeActive));
+btns.forEach(btn => btn.addEventListener('click', makeActive)); 
