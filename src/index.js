@@ -148,10 +148,13 @@ function setUpPagination(data, rowsPerPage) {
     }
 }
 
-function createPaginationButton(texContent) {
+function createPaginationButton(pageData) {
     const button = document.createElement('button');
-    button.textContent = texContent;
-    if (currentPage === texContent) button.classList.add('active');
+    button.textContent = pageData;
+    button.setAttribute('data-page', pageData);
+    
+
+    if (currentPage === pageData) button.classList.add('active');
     return button;
 }
 
@@ -159,8 +162,11 @@ function makeActive() {
     let activeButton = document.querySelector('button.active');
     btns.forEach(btn => btn.classList.remove('active'));
     this.classList.add('active');
+
+    const pageData = this.getAttribute('data-page'); 
+
     //fetch data that corresponds with the clicked number
-    if(this.textContent === '<<') {
+    if(pageData === '<<') {
         if (activeButton === this.nextSibling) {
             this.classList.remove('active');
             activeButton.classList.add('active');
@@ -172,7 +178,7 @@ function makeActive() {
         let currentData = getData(pageNumber, pageSize);
         currentPage = pageNumber;
         loadTable(currentData);
-    } else if (this.textContent === '>>') {
+    } else if (pageData === '>>') {
         if (activeButton === this.previousSibling) {
             this.classList.remove('active');
             activeButton.classList.add('active');
@@ -185,7 +191,7 @@ function makeActive() {
         currentPage = pageNumber;
         loadTable(currentData);
     } else {
-        let pageNumber = this.textContent;
+        let pageNumber = pageData;
         let currentData = getData(pageNumber, pageSize);
         currentPage = pageNumber;
         console.log(currentData)
