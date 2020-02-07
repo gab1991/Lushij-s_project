@@ -1,5 +1,4 @@
-export const data = [
-  // {
+export const data = [// {
 //     id: 1,
 //     user_id: 2,
 //     chat_id: 313659044,
@@ -122,11 +121,11 @@ export const data = [
 //     chat_id: 313659044,
 //     text: "ytyutdyxfnxftntxtjxkklbjkovuobipbivhm fhxthxthxfthxthr zrgzdhxftjxtjxtxfxdfrgzdrgzdr zdfhxjtx", // editable
 //     type: "vacancy", // editable
-//     publish_date: "2020-01-23", // editable
-//     publish_hour: 17, // editable
-//     is_paid: 1, // editable
-//     is_published: 0,
-//     is_deleted: 0, // editable
+// //     publish_date: "2020-01-23", // editable
+// //     publish_hour: 17, // editable
+// //     is_paid: 1, // editable
+// //     is_published: 0,
+// //     is_deleted: 0, // editable
 //     create_date: "2020-01-23 15:12:37"
 //   },
 //   {
@@ -1146,23 +1145,12 @@ export const data = [
 ];
 
 
-function loadData(url) {
-  // Create XHR Object
-  // const xhr = new XMLHttpRequest();
-  // console.log(xhr);
-
-  // // Open 
-  // xhr.open('GET', url , true);
-  // xhr.send();
-  // xhr.onload = function() {
-  //     if(this.status === 200) {
-  //         console.log(this.responseText);
-  //     }
-  // }
-  fetch(url).then((res) => {
-  return res.json();
-})
-  
+function loadData(url = 'http://staffz.ru/api/announce-list?offset=0&limit=5') {
+  return new Promise((resolve, reject) =>{
+    fetch(url)
+    .then(res => res.json())
+    .then(data => resolve(data))
+    .catch(err => reject(err));
+});
 }
-
-loadData('https://staffz.ru/api/announce-list?offset=0&limit=5');
+window.loadData = loadData;

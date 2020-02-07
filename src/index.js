@@ -91,6 +91,11 @@ function loadTable(currentData) {
         .then(() => {
             const selectedElms = multipleSelector(['.text', '.type', '.publish_date', '.publish_hour', '.is_paid', '.is_deleted']);
             addAtribute(selectedElms, 'contenteditable');
+        }).then(() => {
+            // Adding "Save Button"
+            const contEditblCells = document.querySelectorAll('[contenteditable]');
+            contEditblCells.forEach(cell => cell.addEventListener("focus", displaySaveButton));
+            contEditblCells.forEach(cell => cell.addEventListener("blur", hideSaveButton));
         });
 };
 
@@ -199,6 +204,25 @@ function makeActive() {
     }
 
 }
+
+// Floating "save button" 
+function displaySaveButton(e) {
+    const saveBtn = document.createElement('button');
+    saveBtn.textContent = 'Save Changes'
+    saveBtn.classList.add('saveBtn');
+
+    const dimensions = e.target.getBoundingClientRect();
+    saveBtn.style.top = `${dimensions.top}px`;
+    saveBtn.style.left = `${dimensions.left + dimensions.width}px`;
+
+    e.target.appendChild(saveBtn);
+}
+
+function hideSaveButton(e) {
+    const saveBtn = document.querySelector('button.saveBtn');
+    e.target.removeChild(saveBtn);
+}
+
 ////////////////////////       Executable Part
 
 //Get the headings from the currentData file
@@ -239,3 +263,4 @@ setUpPagination(data, pageSize);
 
 const btns = document.querySelectorAll('.pagination button');
 btns.forEach(btn => btn.addEventListener('click', makeActive)); 
+

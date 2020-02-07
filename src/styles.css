@@ -68,6 +68,7 @@ table>thead>tr>th:nth-child(3),
 table>thead>tr>th:nth-child(5),
 table>thead>tr>th:nth-child(10) {
   width: 100px;
+  min-width: 70px;
 }
 
 table>thead>tr>th:nth-child(4) {
@@ -77,6 +78,11 @@ table>thead>tr>th:nth-child(4) {
 td:focus {
   white-space: normal;
   border: 3px solid rgb(76, 143, 165);
+}
+
+td.text,
+.text:focus{
+  text-align: left;
 }
 
 .pagination {
@@ -111,4 +117,18 @@ button:hover {
 
 button:focus {
   outline: none;
+}
+
+button.saveBtn {
+  position: absolute;
+  z-index: 2;
+  padding: 5px;
+  border: 2px solid  rgba(16, 49, 16, 0.63);
+  border-radius: 3px;
+  font-family: inherit;
+  text-align: center;
+  margin: 5px;
+  background-color: rgb(186, 226, 186);
+  cursor: pointer;
+  transition: all ease-in 0.1s;
 }
