@@ -1,6 +1,18 @@
 import {
-    data
+    data, loadData
 } from "/src/data.js";
+
+let currentPage = 1;
+
+async function getData(pageNumber, pageSize) {
+    const offset = (pageNumber - 1) * pageSize;
+    const data = await loadData(offset, pageSize)
+        .then((data) => {
+            if (data) {
+                fillTable(data);
+            }
+        });
+}
 
 function drawTable(headers, parentEl, afterEl) {
     const table = document.createElement('table');
@@ -32,26 +44,6 @@ function countRowsToFetch() {
     return rowsToUpload;
 }
 
-function getData(pageNumber, pageSize) {
-    const pageData = [];
-    let startpoint = (pageNumber - 1) * pageSize;
-    let endpoint = (startpoint + pageSize) - 1;
-    console.log(data.length)
-    for (let i = startpoint; endpoint >= i; i++) {
-        if (data[i]) {
-            pageData.push(data[i]);
-        } else {
-            console.warn(`No data to fill the whole page`);
-        }
-
-    }
-    return pageData;
-}
-
-function pageCashFiller(listRows) {
-    return pageCash.push([listRows]);
-}
-
 function addRows(currentData) {
     currentData.forEach(row => {
         const tr = document.createElement('tr');
@@ -77,7 +69,7 @@ function clearRows() {
 }
 
 
-function loadTable(currentData) {
+function fillTable(currentData) {
     let loadTables = new Promise(function (resolve, reject) {
             clearRows();
             addRows(currentData);
@@ -89,7 +81,7 @@ function loadTable(currentData) {
             };
         }).catch(err => console.error(err))
         .then(() => {
-            const selectedElms = multipleSelector(['.text', '.type', '.publish_date', '.publish_hour', '.is_paid', '.is_deleted']);
+            const selectedElms = multipleSelector(['.text', '.type', '.publishDate', '.publishHour', '.isPaid', '.isDeleted']);
             addAtribute(selectedElms, 'contenteditable');
         }).then(() => {
             // Adding "Save Button"
@@ -125,27 +117,27 @@ function setUpPagination(data, rowsPerPage) {
     let pageCount = Math.ceil(data.length / rowsPerPage);
 
     for (let i = 1; i <= pageCount; i++) {
-        if(i === 1 && pageCount > 1) {
+        if (i === 1 && pageCount > 1) {
             // Make first arrow button
             const button = createPaginationButton('<<');
             wrapper.appendChild(button);
         }
-        if(pageCount > 10 && i === 2) {
+        if (pageCount > 10 && i === 2) {
             // Make the first 3dot button
             const button = createPaginationButton('. . .');
             wrapper.appendChild(button);
         }
-            // Make usual buttons
+        // Make usual buttons
         const button = createPaginationButton(i);
         wrapper.appendChild(button);
 
-        if(pageCount > 10 && i === pageCount-1) {
+        if (pageCount > 10 && i === pageCount - 1) {
             // Make the las 3dot button
             const button = createPaginationButton('. . .');
             wrapper.appendChild(button);
         }
 
-        if(i === pageCount && pageCount > 1) {
+        if (i === pageCount && pageCount > 1) {
             // Make the last arrow button
             const button = createPaginationButton('>>');
             wrapper.appendChild(button);
@@ -157,52 +149,8 @@ function createPaginationButton(pageData) {
     const button = document.createElement('button');
     button.textContent = pageData;
     button.setAttribute('data-page', pageData);
-    
-
     if (currentPage === pageData) button.classList.add('active');
     return button;
-}
-
-function makeActive() {
-    let activeButton = document.querySelector('button.active');
-    btns.forEach(btn => btn.classList.remove('active'));
-    this.classList.add('active');
-
-    const pageData = this.getAttribute('data-page'); 
-
-    //fetch data that corresponds with the clicked number
-    if(pageData === '<<') {
-        if (activeButton === this.nextSibling) {
-            this.classList.remove('active');
-            activeButton.classList.add('active');
-            return;
-        }
-        this.classList.remove('active');
-        activeButton.previousSibling.classList.add('active');
-        let pageNumber = activeButton.previousSibling.textContent;
-        let currentData = getData(pageNumber, pageSize);
-        currentPage = pageNumber;
-        loadTable(currentData);
-    } else if (pageData === '>>') {
-        if (activeButton === this.previousSibling) {
-            this.classList.remove('active');
-            activeButton.classList.add('active');
-            return;
-        }
-        this.classList.remove('active');
-        activeButton.nextSibling.classList.add('active');
-        let pageNumber = activeButton.nextSibling.textContent;
-        let currentData = getData(pageNumber, pageSize);
-        currentPage = pageNumber;
-        loadTable(currentData);
-    } else {
-        let pageNumber = pageData;
-        let currentData = getData(pageNumber, pageSize);
-        currentPage = pageNumber;
-        console.log(currentData)
-        loadTable(currentData);
-    }
-
 }
 
 // Floating "save button" 
@@ -233,6 +181,7 @@ headers.forEach(header => {
     const headerUpper = header[0].toUpperCase() + header.slice(1);
     headersUpper.push(headerUpper);
 });
+
 // Draw the table
 const body = document.querySelector('body');
 const header = document.querySelector('header');
@@ -248,19 +197,51 @@ table.classList.add('content-table');
 
 let pageSize = countRowsToFetch();
 // console.log(pageSize);
-
-// Fetch the data from data module
-let pageCash = [];
-let currentData = getData(1, pageSize);
-pageCashFiller(currentData);
-// console.log(pageCash);
-
-loadTable(currentData);
-
-//pagintation
-let currentPage = 1;
 setUpPagination(data, pageSize);
 
+getData(1, pageSize);
+// pageCashFiller(currentData);
+// console.log(pageCash);
+
 const btns = document.querySelectorAll('.pagination button');
-btns.forEach(btn => btn.addEventListener('click', makeActive)); 
+btns.forEach(btn => btn.addEventListener('click', makeActive));
+
+function makeActive() {
+    let activeButton = document.querySelector('button.active');
+    btns.forEach(btn => btn.classList.remove('active'));
+    this.classList.add('active');
+
+    const pageData = this.getAttribute('data-page');
+
+    //fetch data that corresponds with the clicked number
+    if (pageData === '<<') {
+        if (activeButton === this.nextSibling) {
+            this.classList.remove('active');
+            activeButton.classList.add('active');
+            return;
+        }
+        this.classList.remove('active');
+        activeButton.previousSibling.classList.add('active');
+        let pageNumber = activeButton.previousSibling.textContent;
+        getData(pageNumber, pageSize);
+        currentPage = pageNumber;
+    } else if (pageData === '>>') {
+        if (activeButton === this.previousSibling) {
+            this.classList.remove('active');
+            activeButton.classList.add('active');
+            return;
+        }
+        this.classList.remove('active');
+        activeButton.nextSibling.classList.add('active');
+        let pageNumber = activeButton.nextSibling.textContent;
+        getData(pageNumber, pageSize);
+        currentPage = pageNumber;
+    } else {
+        let pageNumber = pageData;
+        getData(pageNumber, pageSize);
+        currentPage = pageNumber;
+        fillTable();
+    }
+
+}
 

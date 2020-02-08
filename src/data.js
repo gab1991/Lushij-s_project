@@ -1145,7 +1145,9 @@ export const data = [// {
 ];
 
 
-function loadData(url = 'http://staffz.ru/api/announce-list?offset=0&limit=5') {
+
+export function loadData(offset = '0', limit = '5') {
+  const url = `https://staffz.ru/api/announce-list?offset=${offset}&limit=${limit}`;
   return new Promise((resolve, reject) =>{
     fetch(url)
     .then(res => res.json())
@@ -1153,4 +1155,4 @@ function loadData(url = 'http://staffz.ru/api/announce-list?offset=0&limit=5') {
     .catch(err => reject(err));
 });
 }
-window.loadData = loadData;
+
