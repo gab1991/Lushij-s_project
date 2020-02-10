@@ -1146,7 +1146,7 @@ export const data = [// {
 
 
 
-export function loadData(offset = '0', limit = '5') {
+export function loadData(offset = '0', limit = '5' ) {
   const url = `https://staffz.ru/api/announce-list?offset=${offset}&limit=${limit}`;
   return new Promise((resolve, reject) =>{
     fetch(url)
