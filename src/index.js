@@ -46,6 +46,14 @@ function countRowsToFetch() {
 }
 
 function addRows(currentData) {
+  const editableClasses = [
+    ".text",
+    ".type",
+    ".publishDate",
+    ".publishHour",
+    ".isPaid",
+    ".isDeleted"
+  ];
   currentData.forEach(row => {
     const tr = document.createElement("tr");
     // Making an array from given object
@@ -56,7 +64,11 @@ function addRows(currentData) {
       const td = document.createElement("td");
       // Adding class names based on the rows names for further manipulations
       td.classList.add(`${cell[0]}`);
-      td.textContent = cell[1];
+      if (editableClasses.includes(`.${cell[0]}`)) {
+        td.innerHTML = `<span>${cell[1]}</span>`;
+      } else {
+        td.textContent = cell[1];
+      }
       tr.appendChild(td);
       tbody.appendChild(tr);
     });
@@ -83,18 +95,19 @@ function fillTable(currentData) {
     .catch(err => console.error(err))
     .then(() => {
       const selectedElms = multipleSelector([
-        ".text",
-        ".type",
-        ".publishDate",
-        ".publishHour",
-        ".isPaid",
-        ".isDeleted"
+        ".text>span",
+        ".type>span",
+        ".publishDate>span",
+        ".publishHour>span",
+        ".isPaid>span",
+        ".isDeleted>span"
       ]);
       addAtribute(selectedElms, "contenteditable");
     })
     .then(() => {
       // Adding "Save Button"
       const contEditblCells = document.querySelectorAll("[contenteditable]");
+
       contEditblCells.forEach(cell =>
         cell.addEventListener("focus", displaySaveButton)
       );
@@ -168,20 +181,22 @@ function createPaginationButton(pageData) {
 
 // Floating "save button"
 function displaySaveButton(e) {
+  this.parentNode.classList.add("focus");
   const saveBtn = document.createElement("button");
   saveBtn.textContent = "Save Changes";
   saveBtn.classList.add("saveBtn");
 
-  const dimensions = e.target.getBoundingClientRect();
+  const dimensions = this.parentNode.getBoundingClientRect();
   saveBtn.style.top = `${dimensions.top}px`;
   saveBtn.style.left = `${dimensions.left + dimensions.width}px`;
 
-  e.target.appendChild(saveBtn);
+  this.parentNode.appendChild(saveBtn);
 }
 
 function hideSaveButton(e) {
+  this.parentNode.classList.remove("focus");
   const saveBtn = document.querySelector("button.saveBtn");
-  e.target.removeChild(saveBtn);
+  this.parentNode.removeChild(saveBtn);
 }
 
 ////////////////////////       Executable Part
@@ -234,7 +249,6 @@ getData(1, pageSize)
         activeButton.previousSibling.classList.add("active");
         let pageNumber = activeButton.previousSibling.textContent;
         getData(pageNumber, pageSize);
-
       } else if (pageData === ">>") {
         if (activeButton === this.previousSibling) {
           this.classList.remove("active");
@@ -245,7 +259,6 @@ getData(1, pageSize)
         activeButton.nextSibling.classList.add("active");
         let pageNumber = activeButton.nextSibling.textContent;
         getData(pageNumber, pageSize);
-
       } else {
         let pageNumber = pageData;
         getData(pageNumber, pageSize);

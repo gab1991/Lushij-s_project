@@ -5,9 +5,9 @@
 }
 
 body {
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
   /* background: url('./background.jpg'); */
-  background:  lightgrey ;
+  background: lightgrey;
   background-size: cover;
   width: 100%;
   height: 100vh;
@@ -20,6 +20,10 @@ header {
 
 h1 {
   padding: 10px;
+}
+
+span:focus {
+  outline: none;
 }
 
 td,
@@ -55,33 +59,33 @@ th {
   background-color: rgba(85, 131, 84, 0.2);
 }
 
-table>thead>tr>th:nth-child(1) {
+table > thead > tr > th:nth-child(1) {
   width: 30px;
 }
 
-table>thead>tr>th:nth-child(2),
-table>thead>tr>th:nth-child(8) {
+table > thead > tr > th:nth-child(2),
+table > thead > tr > th:nth-child(8) {
   width: 70px;
 }
 
-table>thead>tr>th:nth-child(3),
-table>thead>tr>th:nth-child(5),
-table>thead>tr>th:nth-child(10) {
+table > thead > tr > th:nth-child(3),
+table > thead > tr > th:nth-child(5),
+table > thead > tr > th:nth-child(10) {
   width: 100px;
   min-width: 70px;
 }
 
-table>thead>tr>th:nth-child(4) {
+table > thead > tr > th:nth-child(4) {
   width: 200px;
 }
 
-td:focus {
+td.focus {
   white-space: normal;
   border: 3px solid rgb(76, 143, 165);
 }
 
 td.text,
-.text:focus{
+.text:focus {
   text-align: left;
 }
 
@@ -98,7 +102,7 @@ td.text,
 
 .pagination button {
   padding: 5px;
-  border: 2px solid  rgba(16, 49, 16, 0.63);
+  border: 2px solid rgba(16, 49, 16, 0.63);
   border-radius: 3px;
   font-family: inherit;
   text-align: center;
@@ -110,7 +114,7 @@ td.text,
   transition: all ease-in 0.1s;
 }
 
-button.active{
+button.active {
   transform: scale(1.1);
   background-color: rgb(155, 201, 155);
 }
@@ -127,7 +131,7 @@ button.saveBtn {
   position: absolute;
   z-index: 2;
   padding: 5px;
-  border: 2px solid  rgba(16, 49, 16, 0.63);
+  border: 2px solid rgba(16, 49, 16, 0.63);
   border-radius: 3px;
   font-family: inherit;
   text-align: center;
