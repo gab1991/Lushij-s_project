@@ -129,7 +129,7 @@ button:focus {
 
 button.saveBtn {
   position: absolute;
-  z-index: 2;
+  z-index: 10;
   padding: 5px;
   border: 2px solid rgba(16, 49, 16, 0.63);
   border-radius: 3px;

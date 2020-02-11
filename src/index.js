@@ -107,23 +107,25 @@ function fillTable(currentData) {
     .then(() => {
       // Adding "Save Button"
       const contEditblCells = document.querySelectorAll("[contenteditable]");
+      let txtCont;
 
+      contEditblCells.forEach(cell => {
+        cell.addEventListener("focus", function() {
+          this.parentNode.classList.add("focus");
+          txtCont = this.textContent;
+        });
+        cell.addEventListener("input", function() {
+          displaySaveButton(this, txtCont);
+        });
+      });
       contEditblCells.forEach(cell =>
-        cell.addEventListener("focus", displaySaveButton)
-      );
-      contEditblCells.forEach(cell =>
-        cell.addEventListener("blur", hideSaveButton)
+        cell.addEventListener("blur", function() {
+          this.parentNode.classList.remove("focus");
+          if (!this.getAttribute("data-saved")) this.textContent = txtCont;
+          hideSaveButton(this);
+        })
       );
     });
-}
-
-function getListOfHeadings(thead) {
-  const headers = thead.querySelectorAll("th");
-  const list = [];
-  headers.forEach(header => {
-    list.push(header.textContent);
-  });
-  return list;
 }
 
 function addAtribute(list, attribute) {
@@ -180,23 +182,36 @@ function createPaginationButton(pageData) {
 }
 
 // Floating "save button"
-function displaySaveButton(e) {
-  this.parentNode.classList.add("focus");
-  const saveBtn = document.createElement("button");
+let saveBtn;
+
+function displaySaveButton(that, txtCont) {
+  if (that.parentNode.querySelector("button")) return;
+
+  that.removeAttribute("data-saved");
+
+  saveBtn = document.createElement("button");
   saveBtn.textContent = "Save Changes";
   saveBtn.classList.add("saveBtn");
 
-  const dimensions = this.parentNode.getBoundingClientRect();
+  const dimensions = that.parentNode.getBoundingClientRect();
   saveBtn.style.top = `${dimensions.top}px`;
   saveBtn.style.left = `${dimensions.left + dimensions.width}px`;
 
-  this.parentNode.appendChild(saveBtn);
+  that.parentNode.appendChild(saveBtn);
+
+  saveBtn.addEventListener("mousedown", function() {
+    saveChanges(that, txtCont);
+  });
 }
 
-function hideSaveButton(e) {
-  this.parentNode.classList.remove("focus");
-  const saveBtn = document.querySelector("button.saveBtn");
-  this.parentNode.removeChild(saveBtn);
+function hideSaveButton(that) {
+  if (that.parentNode.querySelector(".saveBtn")) {
+    that.parentNode.removeChild(saveBtn);
+  }
+}
+
+function saveChanges(that, txtCont) {
+  that.setAttribute("data-saved", true);
 }
 
 ////////////////////////       Executable Part
