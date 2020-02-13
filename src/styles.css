@@ -6,7 +6,6 @@
 
 body {
   font-family: "Raleway", sans-serif;
-  /* background: url('./background.jpg'); */
   background: lightgrey;
   background-size: cover;
   width: 100%;
@@ -35,13 +34,18 @@ th {
   white-space: nowrap;
 }
 
+th {
+  word-wrap: break-word;
+  white-space: normal;
+}
+
 .content-table {
   table-layout: fixed;
   overflow: hidden;
-  width: 90%;
+  width: 96%;
   margin-top: 2%;
-  margin-left: 5%;
-  margin-right: 5%;
+  margin-left: 2%;
+  margin-right: 2%;
   border-collapse: collapse;
 }
 
@@ -59,24 +63,32 @@ th {
   background-color: rgba(85, 131, 84, 0.2);
 }
 
-table > thead > tr > th:nth-child(1) {
-  width: 30px;
+table>thead>tr>th:nth-child(1) {
+  width: 4%;
 }
 
-table > thead > tr > th:nth-child(2),
-table > thead > tr > th:nth-child(8) {
-  width: 70px;
+table>thead>tr>th:nth-child(2),
+table>thead>tr>th:nth-child(8) {
+  width: 5%;
 }
 
-table > thead > tr > th:nth-child(3),
-table > thead > tr > th:nth-child(5),
-table > thead > tr > th:nth-child(10) {
-  width: 100px;
-  min-width: 70px;
+table>thead>tr>th:nth-child(3),
+table>thead>tr>th:nth-child(5),
+table>thead>tr>th:nth-child(10) {
+  width: 7%;
 }
 
-table > thead > tr > th:nth-child(4) {
-  width: 200px;
+table>thead>tr>th:nth-child(6) {
+  width: 8%;
+}
+
+table>thead>tr>th:nth-child(7),
+table>thead>tr>th:nth-child(9) {
+  width: 8%;
+}
+
+table>thead>tr>th:nth-child(11) {
+  width: 12%;
 }
 
 td.focus {
