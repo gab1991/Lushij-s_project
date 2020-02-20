@@ -1171,7 +1171,7 @@ export function loadData(offset = '0', limit = '5') {
 }
 
 export function postData(data) {
-  const url = 'https://www.staffz.ru/api/save-announce';
+  const url = 'https://staffz.ru/api/save-announce';
   return new Promise((resolve, reject) => {
     fetch(url, {
       method: 'POST',
